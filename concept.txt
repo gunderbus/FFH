@@ -1,0 +1,22 @@
+How the rpg system is going to work:
+Weapons:
+- Stats
+- - Type || Different weapon types have different wielders
+- - Weight || Weight determines the effect on speed
+- - Damage || Damage is a added bonus to your stats, changes what bonus based on the different type of weapon
+
+Armor:
+- Stats
+- - Type || Determines the type of wearer who can use it
+- - Physical Defense || Boosts the defense of the character
+- - Magical Defense
+
+Characters:
+- Stats
+- - Weapon Type || Determines what type of weapon the weilder can use
+- - Armor Type || Determines what type of armor the weilder can weare
+- - Physical Defense
+- - Max HP
+- - Physical Attack
+- - Magical Attack
+- - Speed
