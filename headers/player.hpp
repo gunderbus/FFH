@@ -9,27 +9,49 @@
 #include "camera.hpp"
 #include "pref.hpp"
 
+// spritesheet works like this: spriteSheet[direction][animation][frame] = texture
+
 class Player {
 public:
     std::string name;
     sf::Texture currentTexture;
-    sf::Texture*** spriteSheet;
+    sf::Texture**** spriteSheet;
     Tileset** worlds;
     Preferences* pref;
     Camera* camera;
+    int** animationLengths; // animationLengths[direction][animation] = number of frames
 
-    int animation = 0;
+    int animation = 0; // current animation
+    int frame = 0; // current frame of the animation
 
     int speed = 4;
 
     int currentMenu;
 
+    float animationTimer = 0.0f;
+
     int world;
     int position[2];
     int direction;
+    
+    int getArrayLength(sf::Texture** array) {
+        int length = 0;
+        while (array[length] != nullptr) {
+            length++;
+        }
+        return length;
+    };
+
+    int getArrayLength(sf::Texture*** array) {
+        int length = 0;
+        while (array[length][0] != nullptr) {
+            length++;
+        }
+        return length;
+    };
 
     void draw(sf::RenderWindow& window) {
-        sf::Texture* texture = spriteSheet[direction][0];
+        sf::Texture* texture = spriteSheet[direction][0][0]; // default to the first frame of the first animation
         drawSprite(window, *texture, position[0] * 32 + camera->x, position[1] * 32 + camera->y);
     }
 
@@ -70,13 +92,14 @@ public:
         setCamera();
     }
 
-    void playerInit(const std::string& name, sf::Texture*** spriteSheet, Tileset** worlds, Preferences* pref, Camera* camera) {
+    void playerInit(const std::string& name, sf::Texture**** spriteSheet, Tileset** worlds, Preferences* pref, Camera* camera, int** animationLengths) {
         this->name = name;
         this->spriteSheet = spriteSheet;
         this->worlds = worlds;
         this->pref = pref;
         this->camera = camera;
-        this->currentTexture = spriteSheet[0][0][0];
+        this->animationLengths = animationLengths;
+        this->currentTexture = *spriteSheet[0][0][0];
         currentMenu = 0;
         world = 0;
         position[0] = 0;
@@ -97,8 +120,32 @@ public:
     }
 
     sf::Texture getAnimationFrame(int animationa, int frame) {
-        currentTexture = spriteSheet[direction][animationa][frame];
-        return currentTexture;
+        sf::Texture currentTexturea = *spriteSheet[direction][animationa][frame];
+        return currentTexturea;
+    }
+
+    void playAnimation(int animationa, sf::Clock clock){
+        float time = getDeltaTime(clock);
+        if (animationTimer >= 0.2f) {
+            frame++;
+            int frameCount = 4; // fallback
+            if(animationa < getArrayLength(spriteSheet[direction]) && frame < getArrayLength(spriteSheet[direction][animationa])){
+                frameCount = animationLengths[direction][animationa];
+
+                if(frame >= getArrayLength(spriteSheet[direction][animationa])){
+                    frame = 0;
+                }
+
+                animation = animationa;
+
+            }
+
+            currentTexture = getAnimationFrame(animationa, frame);
+
+            animationTimer = 0.0f;
+        }else{
+            animationTimer += time;
+        }
     }
 } Player;
 

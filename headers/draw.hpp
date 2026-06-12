@@ -37,9 +37,9 @@ inline void drawRect(sf::RenderTarget& target, float x, float y, float width, fl
     target.draw(rectangle);
 }
 
-void getDeltaTime(sf::Clock& clock) {
+float getDeltaTime(sf::Clock& clock) {
     sf::Time deltaTime = clock.restart();
-    float dt = deltaTime.asSeconds();
+    return deltaTime.asSeconds();
 }
 
 #endif
