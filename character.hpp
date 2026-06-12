@@ -16,9 +16,9 @@ typedef struct Character {
     int direction;
 } Character;
 
-void drawCharacter(sf::RenderWindow& window, Character& character, int x, int y, Tileset& tileset) {
+void drawCharacter(sf::RenderWindow& window, Character& character, int x, int y, Tileset& tileset, Camera& camera) {
     sf::Texture texture = character.texture;
-    drawSprite(window, texture, x, y);
+    drawSprite(window, texture, x + camera.x, y + camera.y);
 }
 
 void setInteraction(Character& character, Tileset& tileset){
