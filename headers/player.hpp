@@ -124,8 +124,8 @@ public:
         return currentTexturea;
     }
 
-    void playAnimation(int animationa, sf::Clock clock){
-        float time = getDeltaTime(clock);
+    void playAnimation(int animationa, float deltaTime) {
+        float time = deltaTime;
         if (animationTimer >= 0.2f) {
             frame++;
             int frameCount = 4; // fallback
@@ -146,6 +146,10 @@ public:
         }else{
             animationTimer += time;
         }
+    }
+
+    void drawPlayer(sf::RenderWindow& window) {
+        drawSprite(window, currentTexture, position[0] * 32 + camera->x, position[1] * 32 + camera->y);
     }
 } Player;
 
