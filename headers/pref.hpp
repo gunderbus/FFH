@@ -1,6 +1,6 @@
 #pragma region
-#ifndef CAMERA_HPP
-#define CAMERA_HPP
+#ifndef PREFERENCES_HPP
+#define PREFERENCES_HPP
 #include <SFML/Graphics.hpp>
 #include "tileset.hpp"
 #include "draw.hpp"
