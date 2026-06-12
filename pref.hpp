@@ -11,6 +11,7 @@ typedef struct Preferences {
     int enemySightRange;
     sf::Color textColor;
     sf::Texture textBoxTexture;
+    sf::Font textFont;
 } Preferences;
 
 #endif
