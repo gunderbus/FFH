@@ -1,7 +1,7 @@
 CXX := c++
-CXXFLAGS := -std=c++17 -Wall -Wextra -I/opt/homebrew/opt/sfml/include
-LDFLAGS := -L/opt/homebrew/opt/sfml/lib
-LDLIBS := -lsfml-graphics -lsfml-window -lsfml-system
+CXXFLAGS := -std=c++17 -Wall -Wextra $(shell pkg-config --cflags sfml-all)
+LDFLAGS := $(shell pkg-config --libs-only-L sfml-all)
+LDLIBS := $(shell pkg-config --libs-only-l sfml-all)
 TARGET := ffh
 
 all: $(TARGET)
